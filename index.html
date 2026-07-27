@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Travel Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo"><span class="heart">🎈</span>Our <span>Travel</span> Book</div>
+    <ul class="nav-links">
+      <li><a href="#" class="active">Home</a></li>
+      <li><a href="#">Destinations</a></li>
+      <li><a href="#">Wishlist</a></li>
+      <li><a href="#">Visited</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="icon-btn" aria-label="Search">🔍</button>
+      <button class="icon-btn" aria-label="Toggle theme">🌙</button>
+      <div class="avatar"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop" alt="Profile"></div>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <span class="balloon b1">🎈</span>
+  <span class="balloon b2">🎈</span>
+  <span class="balloon b3">🎈</span>
+  <span class="balloon b4">🎈</span>
+  <span class="balloon b5">🎈</span>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">" Collect moments, not things "</p>
+    <h1>Our Travel <em>Book</em></h1>
+    <p>Every destination, every memory, every adventure.</p>
+    <div class="hero-ctas">
+      <a href="#featured" class="btn btn-primary">Explore Destinations</a>
+      <a href="#" class="btn btn-ghost">♡ View Wishlist</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="stats-card">
+    <div class="stats-row" id="statsRow"></div>
+    <div class="search-row">
+      <div class="search-box">
+        <span>🔍</span>
+        <input type="text" id="searchInput" placeholder="Search country, city, or anything...">
+        <span class="sliders-icon">☰</span>
+      </div>
+      <button class="btn-search">🔍 Search</button>
+    </div>
+  </div>
+
+  <div class="filters" id="filterChips"></div>
+</div>
+
+<section class="featured" id="featured">
+  <div class="featured-head">
+    <h2>Featured Destinations <span class="heart">♡</span></h2>
+    <a href="#" class="view-all">View All Destinations →</a>
+  </div>
+  <div class="card-grid" id="cardGrid"></div>
+</section>
+
+<script src="script.js"></script>
+
+</body>
+</html>

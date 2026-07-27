@@ -30,6 +30,41 @@ window.firestoreUpdateDoc = updateDoc;
 window.firestoreDeleteDoc = deleteDoc;
 window.firestoreDoc = doc;
 
+// ---------- RECORDS / STATS ----------
+// Reads every document in the "records" collection (as seen in the Firebase
+// console: records/r001 with fields cities_discovered, countries_explored,
+// upcoming_trips, visited_places, wishlist_places) and sums the fields
+// together. This lets you add more record documents later (r002, r003...)
+// without changing any code — they'll just be added into the totals.
+async function loadRecordsStats() {
+  const totals = {
+    countries_explored: 0,
+    cities_discovered: 0,
+    wishlist_places: 0,
+    visited_places: 0,
+    upcoming_trips: 0
+  };
+
+  try {
+    const snapshot = await getDocs(collection(db, "records"));
+    if (snapshot.empty) return null;
+
+    snapshot.forEach(docSnap => {
+      const data = docSnap.data();
+      Object.keys(totals).forEach(key => {
+        totals[key] += Number(data[key]) || 0;
+      });
+    });
+
+    return totals;
+  } catch (err) {
+    console.error("Could not load records/stats from Firestore:", err);
+    return null;
+  }
+}
+
+window.loadRecordsStats = loadRecordsStats;
+
 // ---------- CLOUDINARY (free image/PDF hosting) ----------
 // Used by admin.js when adding/editing a destination's image or PDF.
 const CLOUDINARY_CLOUD_NAME = "dzrko8qrn";             // <-- your cloud name

@@ -13,18 +13,18 @@
 <header>
   <div class="nav">
     <div class="logo"><span class="heart">🎈</span>Our <span>Travel</span> Book</div>
+
+    <input type="checkbox" id="navToggle" class="nav-toggle">
+    <label for="navToggle" class="nav-toggle-label" aria-label="Menu">☰</label>
+
     <ul class="nav-links">
       <li><a href="#" class="active">Home</a></li>
       <li><a href="#">Destinations</a></li>
       <li><a href="#">Wishlist</a></li>
       <li><a href="#">Visited</a></li>
-      <li><a href="#">About</a></li>
     </ul>
     <div class="nav-actions">
-      <button class="icon-btn" aria-label="Search">🔍</button>
-      <button class="icon-btn" aria-label="Toggle theme">🌙</button>
       <a href="admin.html" class="admin-link">⚙️ Admin</a>
-      <div class="avatar"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop" alt="Profile"></div>
     </div>
   </div>
 </header>
@@ -43,7 +43,7 @@
     <p>Every destination, every memory, every adventure.</p>
     <div class="hero-ctas">
       <a href="#featured" class="btn btn-primary">Explore Destinations</a>
-      <a href="#" class="btn btn-ghost">♡ View Wishlist</a>
+      <a href="#" class="btn btn-ghost" data-filter-shortcut="wishlist">♡ View Wishlist</a>
     </div>
   </div>
 </section>
@@ -57,7 +57,7 @@
         <input type="text" id="searchInput" placeholder="Search country, city, or anything...">
         <span class="sliders-icon">☰</span>
       </div>
-      <button class="btn-search">🔍 Search</button>
+      <button class="btn-search" id="searchBtn">🔍 Search</button>
     </div>
   </div>
 
@@ -70,8 +70,10 @@
     <a href="#" class="view-all">View All Destinations →</a>
   </div>
   <div class="card-grid" id="cardGrid"></div>
+  <p class="no-results" id="noResults" style="display:none;">No destinations match your search/filter.</p>
 </section>
 
+<!-- Destination info modal -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
@@ -86,7 +88,7 @@
         <span id="modalBudget" class="modal-budget"></span>
       </div>
       <ul id="modalRemarks" class="modal-remarks"></ul>
-      <a id="modalPdfBtn" class="btn btn-primary modal-pdf-btn" href="#" target="_blank" rel="noopener">📄 View More Info</a>
+      <a id="modalPdfBtn" class="btn btn-primary modal-pdf-btn" href="#">📄 View More Info</a>
     </div>
   </div>
 </div>

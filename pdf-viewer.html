@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Preview</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; overflow:hidden; font-family: 'Poppins', Arial, sans-serif; }
+
+  .topbar {
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-height:56px;
+    padding: 0 12px;
+    padding-top: env(safe-area-inset-top);
+    background:#1f1f1f;
+    color:#fff;
+    flex-shrink:0;
+  }
+  .back-btn {
+    background:none;
+    border:none;
+    color:#fff;
+    font-size:15px;
+    font-weight:500;
+    cursor:pointer;
+    padding:10px 10px;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    flex-shrink:0;
+  }
+  .back-btn:hover, .back-btn:active { background:rgba(255,255,255,0.12); }
+  .doc-title {
+    flex:1;
+    min-width:0;
+    font-size:14px;
+    font-weight:500;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .download-btn {
+    color:#fff;
+    text-decoration:none;
+    font-size:18px;
+    padding:10px;
+    border-radius:8px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .download-btn:hover { background:rgba(255,255,255,0.12); }
+
+  .frame-wrap {
+    position:absolute;
+    top:56px;
+    left:0; right:0; bottom:0;
+    background:#525659;
+  }
+  .frame-wrap iframe {
+    width:100%;
+    height:100%;
+    border:none;
+    display:block;
+  }
+
+  .empty-state {
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    gap:14px;
+    text-align:center;
+    padding:20px;
+  }
+  .empty-state a {
+    color:#fff;
+    background:#e91e63;
+    padding:10px 20px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:500;
+  }
+
+  /* On narrow phones, trim side padding and title size a touch further */
+  @media (max-width: 380px){
+    .topbar{ padding: 0 8px; gap: 6px; }
+    .doc-title{ font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <button class="back-btn" id="backBtn">← Back</button>
+    <span class="doc-title" id="docTitle"></span>
+    <a class="download-btn" id="downloadBtn" href="#" title="Download">⬇</a>
+  </div>
+
+  <div class="frame-wrap" id="frameWrap">
+    <iframe id="pdfFrame" src="" title="PDF preview"></iframe>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const pdfUrl = params.get("src");
+    const title = params.get("title") || "Document";
+
+    document.getElementById("docTitle").textContent = title;
+    document.title = title;
+
+    const backBtn = document.getElementById("backBtn");
+    const downloadBtn = document.getElementById("downloadBtn");
+    const pdfFrame = document.getElementById("pdfFrame");
+    const frameWrap = document.getElementById("frameWrap");
+
+    if (pdfUrl) {
+      downloadBtn.href = pdfUrl;
+
+      // Public https URLs (e.g. Cloudinary) get routed through Google's viewer
+      // for consistent rendering across desktop/mobile browsers.
+      // Local/relative dev paths render natively in the iframe instead,
+      // since Google's viewer can't reach localhost/127.0.0.1 files.
+      const isPublicHttp = /^https?:\/\//i.test(pdfUrl)
+        && !pdfUrl.includes("127.0.0.1")
+        && !pdfUrl.includes("localhost");
+
+      pdfFrame.src = isPublicHttp
+        ? `https://docs.google.com/viewer?url=${encodeURIComponent(pdfUrl)}&embedded=true`
+        : pdfUrl;
+    } else {
+      frameWrap.innerHTML = `
+        <div class="empty-state">
+          <p>No document was specified for this preview.</p>
+          <a href="index.html">← Return home</a>
+        </div>`;
+    }
+
+    // Back button: use browser history if we arrived from within the app,
+    // otherwise fall back to index.html directly (e.g. if opened via a
+    // bookmark or refreshed straight into this page).
+    backBtn.addEventListener("click", () => {
+      if (document.referrer && document.referrer.includes(window.location.host)) {
+        history.back();
+      } else {
+        window.location.href = "index.html";
+      }
+    });
+  </script>
+
+</body>
+</html>

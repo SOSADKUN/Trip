@@ -56,6 +56,7 @@
   font-weight: 600;
   color: var(--ink-soft);
   flex: 1;
+  min-width: 0;
 }
 
 .admin-form .hint{
@@ -73,6 +74,7 @@
   border-radius: var(--radius-sm);
   padding: 10px 12px;
   outline: none;
+  width: 100%;
 }
 
 .admin-form input:focus,
@@ -101,6 +103,7 @@
   display: flex;
   gap: 12px;
   margin-top: 6px;
+  flex-wrap: wrap;
 }
 
 .form-actions .btn{
@@ -166,6 +169,7 @@
 .admin-row-title{
   font-weight: 700;
   font-size: 1rem;
+  overflow-wrap: anywhere;
 }
 .admin-row-title span{
   font-weight: 400;
@@ -214,9 +218,31 @@
 .btn-delete:hover{ background: #fdeceb; border-color: #e57a6d; }
 .btn-delete:disabled{ opacity: 0.6; cursor: not-allowed; }
 
-@media (max-width: 640px){
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px){
+  .admin-wrap{ padding: 28px 16px 80px; gap: 24px; }
   .admin-form-card,
   .admin-list-card{ padding: 24px 20px; }
-  .form-row{ flex-direction: column; }
-  .admin-row{ flex-wrap: wrap; }
+  .form-row{ flex-direction: column; gap: 12px; }
+  .form-actions .btn{ flex: 1; }
+}
+
+@media (max-width: 480px){
+  .admin-form-card h2,
+  .admin-list-card h2{ font-size: 1.25rem; }
+
+  /* stack each destination row: media+info on top, actions full width below */
+  .admin-row{
+    flex-wrap: wrap;
+    padding: 12px;
+    gap: 12px;
+  }
+  .admin-row-media{ width: 60px; height: 60px; }
+  .admin-row-title{ font-size: 0.92rem; }
+  .admin-row-actions{
+    width: 100%;
+    order: 3;
+  }
+  .btn-edit, .btn-delete{ flex: 1; text-align: center; }
 }

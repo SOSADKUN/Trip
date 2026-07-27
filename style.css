@@ -110,6 +110,22 @@
     border: 2px solid var(--pink-soft);
   }
 
+  .admin-link{
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 8px 16px;
+    border-radius: 30px;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  .admin-link:hover{
+    border-color: var(--pink);
+    color: var(--pink-deep);
+  }
+
   /* ---------- HERO ---------- */
   .hero{
     position: relative;
@@ -486,7 +502,36 @@
   color: var(--ink-soft);
   font-size: 0.92rem;
   margin-top: 4px;
+}
+.modal-meta{
+  display:flex;
+  align-items:center;
+  gap: 14px;
+  margin-top: 14px;
+  font-size: 0.88rem;
+  font-weight:600;
+}
+.modal-rating{ color: var(--gold); }
+.modal-rating::before{ content: ""; }
+.modal-budget{ color: var(--pink-deep); }
+.modal-remarks{
+  margin-top: 16px;
   margin-bottom: 20px;
+  display:flex;
+  flex-direction:column;
+  gap: 8px;
+}
+.modal-remarks li{
+  list-style:none;
+  background: var(--pink-pale);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.modal-remarks li::before{
+  content: "💬 ";
 }
 .modal-pdf-btn{
   width:100%;

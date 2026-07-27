@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · Our Travel Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body">
+
+<header>
+  <div class="nav">
+    <div class="logo"><span class="heart">🎈</span>Our <span>Travel</span> Book <span class="admin-badge">Admin</span></div>
+    <a href="index.html" class="admin-link">← Back to site</a>
+  </div>
+</header>
+
+<main class="admin-wrap">
+
+  <section class="admin-form-card">
+    <h2 id="formHeading">Add a Destination</h2>
+    <form id="destinationForm" class="admin-form">
+      <input type="hidden" id="editingId" value="">
+
+      <div class="form-row">
+        <label>Country
+          <input type="text" id="fCountry" required>
+        </label>
+        <label>City
+          <input type="text" id="fCity" required>
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label>Badge
+          <input type="text" id="fBadge" placeholder="e.g. Trending">
+        </label>
+        <label>Budget (RM)
+          <input type="number" id="fBudget" min="0" required>
+        </label>
+        <label>Rating
+          <input type="number" id="fRating" min="0" max="5" step="0.1" required>
+        </label>
+      </div>
+
+      <label>Remarks <span class="hint">(one per line)</span>
+        <textarea id="fRemarks" rows="3" placeholder="Great food scene&#10;Book ahead in peak season"></textarea>
+      </label>
+
+      <div class="form-row">
+        <label>Image
+          <input type="file" id="fImg" accept="image/*">
+          <span class="current-file" id="currentImgLabel"></span>
+        </label>
+        <label>PDF
+          <input type="file" id="fPdf" accept="application/pdf">
+          <span class="current-file" id="currentPdfLabel"></span>
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" id="submitBtn">Save Destination</button>
+        <button type="button" class="btn btn-ghost" id="cancelEditBtn" hidden>Cancel Edit</button>
+      </div>
+      <p id="formStatus" class="form-status"></p>
+    </form>
+  </section>
+
+  <section class="admin-list-card">
+    <h2>All Destinations</h2>
+    <div id="adminList" class="admin-list">
+      <p class="admin-empty" id="adminEmpty">Loading destinations...</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- Firebase connection + Cloudinary helper live in data.js -->
+<script type="module" src="data.js"></script>
+<script src="admin.js"></script>
+
+</body>
+</html>

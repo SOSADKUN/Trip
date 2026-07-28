@@ -114,8 +114,17 @@ function formatBudget(budget){
   return `RM ${isNaN(n) ? budget : n.toLocaleString()}`;
 }
 
+function normalizeRemarks(remarks){
+  if (Array.isArray(remarks)) return remarks.filter(Boolean);
+  if (typeof remarks === "string") return remarks
+    .split("\n")
+    .map(line => line.trim())
+    .filter(Boolean);
+  return [];
+}
+
 function remarkCount(d){
-  return Array.isArray(d.remarks) ? d.remarks.length : 0;
+  return normalizeRemarks(d.remarks).length;
 }
 
 function matchesFilter(d, key){
@@ -165,10 +174,10 @@ function renderCards(list){
           <span class="card-fav" data-fav>${d.wishlist ? "♥" : "♡"}</span>
         </div>
         <div class="card-body">
-          <div class="card-title">${d.country}</div>
-          <div class="card-loc">${d.city}</div>
+          <div class="card-title">${d.city}</div>
+          <div class="card-loc">${d.country}</div>
           <div class="card-meta">
-            <div class="card-rating"><span class="star">★</span>${d.rating} <span class="count">(${remarkCount(d)} remarks)</span></div>
+            <div class="card-rating"><span class="star">★</span>${d.rating}</span></div>
             <div class="card-price">Budget <strong>${formatBudget(d.budget)}</strong></div>
           </div>
         </div>
@@ -245,8 +254,8 @@ const modalClose = document.getElementById("modalClose");
 function openModal(destination){
   modalImg.src = destination.img;
   modalImg.alt = `${destination.city}, ${destination.country}`;
-  modalTitle.textContent = destination.country;
-  modalLoc.textContent = destination.city;
+  modalTitle.textContent = destination.city;
+  modalLoc.textContent = destination.country;
   modalRating.textContent = `★ ${destination.rating}`;
   modalBudget.textContent = `From ${formatBudget(destination.budget)}`;
 
@@ -258,7 +267,7 @@ function openModal(destination){
     : "#";
 
   modalRemarks.innerHTML = "";
-  (destination.remarks || []).forEach(r => {
+  normalizeRemarks(destination.remarks).forEach(r => {
     modalRemarks.innerHTML += `<li>${r}</li>`;
   });
 

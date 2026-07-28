@@ -30,6 +30,15 @@ function formatBudget(budget){
   return `RM ${isNaN(n) ? budget : n.toLocaleString()}`;
 }
 
+function normalizeRemarks(remarks){
+  if (Array.isArray(remarks)) return remarks.filter(Boolean);
+  if (typeof remarks === "string") return remarks
+    .split("\n")
+    .map(line => line.trim())
+    .filter(Boolean);
+  return [];
+}
+
 function resetForm(){
   form.reset();
   editingIdInput.value = "";
@@ -48,11 +57,11 @@ function startEdit(destination){
   fBadge.value = destination.badge || "";
   fBudget.value = destination.budget || "";
   fRating.value = destination.rating || "";
-  fRemarks.value = Array.isArray(destination.remarks) ? destination.remarks.join("\n") : "";
+  fRemarks.value = normalizeRemarks(destination.remarks).join("\n");
   currentImgLabel.textContent = destination.img ? "Current: image on file (leave blank to keep)" : "";
   currentPdfLabel.textContent = destination.pdf ? "Current: PDF on file (leave blank to keep)" : "";
 
-  formHeading.textContent = `Editing ${destination.country} · ${destination.city}`;
+  formHeading.textContent = `Editing ${destination.city} · ${destination.country}`;
   submitBtn.textContent = "Update Destination";
   cancelEditBtn.hidden = false;
   formStatus.textContent = "";
@@ -81,12 +90,12 @@ function renderList(){
         ${d.img ? `<img src="${d.img}" alt="${d.city}">` : `<div class="admin-row-noimg">No image</div>`}
       </div>
       <div class="admin-row-info">
-        <div class="admin-row-title">${d.country} <span>· ${d.city}</span></div>
+        <div class="admin-row-title">${d.city} <span>· ${d.country}</span></div>
         <div class="admin-row-meta">
           <span>★ ${d.rating ?? "-"}</span>
           <span>${formatBudget(d.budget)}</span>
           <span>${d.badge || ""}</span>
-          <span>${Array.isArray(d.remarks) ? d.remarks.length : 0} remarks</span>
+          <span>${normalizeRemarks(d.remarks).length} remarks</span>
           ${d.pdf ? `<a href="${d.pdf}" target="_blank" rel="noopener">PDF ↗</a>` : `<span class="no-pdf">No PDF</span>`}
         </div>
       </div>
